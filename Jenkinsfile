@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t vigneshwar1908/vickyimg2feb19:v1 .'
+                    sh 'docker build -t vigneshwar1908/vickyimg3feb27:v1 .'
                     sh 'docker images'
                 }
             }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push vigneshwar1908/vickyimg2feb19:v1'
+                    sh 'docker push vigneshwar1908/vickyimg3feb27:v1'
                 }
             }
         }
@@ -28,12 +28,12 @@ pipeline {
             steps {
                script {
                    def dockerrm = 'sudo docker rm -f My-first-containe2211 || true'
-                    def dockerCmd = 'sudo docker run -itd --name My-first-containe2211 -p 8083:80 vigneshwar1908/vickyimg2feb19:v1'
+                    def dockerCmd = 'sudo docker run -itd --name My-first-containe2211 -p 8083:80 vigneshwar1908/vickyimg3feb27:v1'
                     sshagent(['sshkeypair']) {
                         //chnage the private ip in below code
                         // sh "docker run -itd --name My-first-containe2111 -p 8083:80 akshu20791/2febimg:v1"
-                         sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.41.149 ${dockerrm}"
-                         sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.41.149 ${dockerCmd}"
+                         sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.34.245 ${dockerrm}"
+                         sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.34.245 ${dockerCmd}"
                     }
                 }
             }
